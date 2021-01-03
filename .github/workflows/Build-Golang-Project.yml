@@ -7,20 +7,23 @@ on:
       - '.github/workflows/Build-Golang-Project.yml'
   schedule:
         - cron: 0 */12 * * *
+  pull_request:
+    branches: 
+      - master
 
 jobs:
   Gogs:
     name: Build Gogs
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Go 1.15.2
+    - name: Set up Go 1.15.6
       uses: actions/setup-go@v2
       with:
-        go-version: 1.15.2
+        go-version: 1.15.6
     - name: Use Node.js 14.x
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
-        node-version: 14.x
+        node-version: 14.15.3
     - name: Clone Gogs From Github and Build
       if: success()
       run: |
@@ -54,14 +57,14 @@ jobs:
     name: Build Gitea
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Go 1.15.2
+    - name: Set up Go 1.15.6
       uses: actions/setup-go@v2
       with:
-        go-version: 1.15.2
+        go-version: 1.15.6
     - name: Use Node.js 14.x
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
-        node-version: 14.x
+        node-version: 14.15.3
     - name: Clone Gitea From Github and Build
       run: |
         git clone https://github.com/go-gitea/gitea.git
@@ -92,10 +95,10 @@ jobs:
     name: Build Nps
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Go 1.15.2
+    - name: Set up Go 1.15.6
       uses: actions/setup-go@v2
       with:
-        go-version: 1.15.2
+        go-version: 1.15.6
     - name: Clone Nps From Github and Build
       run: |
         git clone https://github.com/ehang-io/nps.git
@@ -120,10 +123,10 @@ jobs:
     name: Build Frp
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Go 1.15.2
+    - name: Set up Go 1.15.6
       uses: actions/setup-go@v2
       with:
-        go-version: 1.15.2
+        go-version: 1.15.6
     - name: Clone Frp From Github and Build
       run: |
         git clone https://github.com/fatedier/frp.git
@@ -148,10 +151,10 @@ jobs:
 #    name: Build V2Ray
 #    runs-on: ubuntu-latest
 #    steps:
-#    - name: Set up Go 1.15.2
+#    - name: Set up Go 1.15.6
 #      uses: actions/setup-go@v2
 #      with:
-#        go-version: 1.15.2
+#        go-version: 1.15.6
 #    - name: Clone V2Ray From Github and Build
 #      run: |
 #        sudo apt update -qq
