@@ -10,6 +10,9 @@ on:
       -  'lean-lede/rpi/.config'
       -  'lean-lede/rpi32/.config'
       -  'lean-lede/mt7621/.config'
+  pull_request:
+    branches: 
+      - master
   schedule:
         - cron: 0 */4 * * *
 
