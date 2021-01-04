@@ -93,9 +93,9 @@ jobs:
           sudo chmod +x /usr/bin/upx
           mkdir -p build_assets
           go build -v -o build_assets/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
-          upx -q -9 build_assets/v2ray >/dev/null 2>&1
+          upx -q -9 build_assets/v2ray || echo "unable to be upx"
           go build -v -o build_assets/v2ctl -trimpath -ldflags "-s -w -buildid=" -tags confonly ./infra/control/main
-          upx -q -9 build_assets/v2ctl >/dev/null 2>&1
+          upx -q -9 build_assets/v2ctl || echo "unable to be upx"
       - name: Build Windows wv2ray
         if: matrix.goos == 'windows'
         run: |
