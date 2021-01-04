@@ -86,6 +86,10 @@ jobs:
 
       - name: Build V2Ray
         run: |
+          sudo -E apt-get -qq remove upx
+          wget https://github.com/upx/upx/releases/download/v3.96/upx-3.96-amd64_linux.tar.xz
+          tar -xvf upx-3.96-amd64_linux.tar.xz
+          cp upx-3.96-amd64_linux/upx /usr/bin/upx
           mkdir -p build_assets
           go build -v -o build_assets/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
           upx -q -9 build_assets/v2ray
@@ -97,8 +101,8 @@ jobs:
           echo "::warning ::wv2ray.exe will be removed in v5"
           go build -v -o build_assets/wv2ray.exe -trimpath -ldflags "-s -w -H windowsgui -buildid=" ./main
           cd ./build_assets || exit 1
-          upx -q -9 v2ray -o v2ray.exe
-          upx -q -9 v2ctl -o v2ctl.exe
+          mv v2ray v2ray.exe
+          mv v2ctl v2ctl.exe
       - name: Prepare package
         run: cp -v ./release/config/*.* ./build_assets
 
