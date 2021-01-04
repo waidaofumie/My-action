@@ -1,15 +1,8 @@
 name: Build-Golang-Project
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - '.github/workflows/Build-Golang-Project.yml'
+  workflow_dispatch:
   schedule:
-        - cron: 0 */12 * * *
-  pull_request:
-    branches: 
-      - master
+        - cron: 0 0 * * *
 
 jobs:
   Gogs:
@@ -20,7 +13,7 @@ jobs:
       uses: actions/setup-go@v2
       with:
         go-version: 1.15.6
-    - name: Use Node.js 14.x
+    - name: Use Node.js 14.15.3
       uses: actions/setup-node@v2
       with:
         node-version: 14.15.3
@@ -40,7 +33,7 @@ jobs:
         cd gogs
         upx -9 gogs -q
     - name: Upload Flies to Github Actions
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: success()
       with:
        name: Gogs
@@ -61,7 +54,7 @@ jobs:
       uses: actions/setup-go@v2
       with:
         go-version: 1.15.6
-    - name: Use Node.js 14.x
+    - name: Use Node.js 14.15.3
       uses: actions/setup-node@v2
       with:
         node-version: 14.15.3
@@ -78,7 +71,7 @@ jobs:
         cd gitea
         upx -9 gitea -q
     - name: Upload Flies to Github Actions
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: success()
       with:
        name: Gitea
@@ -106,7 +99,7 @@ jobs:
         go version
         bash <(curl -fsSL https://raw.githubusercontent.com/1orz/My-action/master/Golang-Project/Nps/build.sh) 
     - name: Upload Flies to Github Actions
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: success()
       with:
        name: Nps
@@ -134,7 +127,7 @@ jobs:
         go version
         bash package.sh
     - name: Upload Flies to Github Actions
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: success()	
       with:	
        name: Frp	
@@ -147,37 +140,4 @@ jobs:
         curl -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Software/Linux/Frp" -F "file=@Frp.zip" ${{ secrets.MAIN_UPLOAD_PROCESSOR }}
         # curl --socks5 ${{ secrets.PROXY_ADDR }} -U ${{ secrets.PROXY_USER }} -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Software/ALL/Frp" -F "file=@Frp.zip" ${{ secrets.CN_STATION_PROCESSOR }}
 
-#  V2Ray:
-#    name: Build V2Ray
-#    runs-on: ubuntu-latest
-#    steps:
-#    - name: Set up Go 1.15.6
-#      uses: actions/setup-go@v2
-#      with:
-#        go-version: 1.15.6
-#    - name: Clone V2Ray From Github and Build
-#      run: |
-#        sudo apt update -qq
-#        sudo apt install -qq upx jq git file pkg-config zip g++ zlib1g-dev unzip python openssl tree
-#        mkdir go
-#        export GOPATH=$PWD/go
-#        go get -insecure -u v2ray.com/core/...
-#        cd $GOPATH/src/v2ray.com/core
-#        go version
-#        sudo bazel build --sandbox_debug --action_env=GOPATH=$GOPATH --action_env=PATH=$PATH //release:all
-#        cd bazel-bin/release
-#        echo "::set-env name=V2BIN::$(pwd)"
-#    - name: Upload Flies to Github Actions
-#      uses: actions/upload-artifact@master
-#      if: success()	
-#      with:	
-#       name: V2Ray
-#       path: ${{ env.V2BIN }}/*.zip
-#    - name: Upload V2Ray's Binary Files to Main Download Station.
-#      if: success()	
-#      run: |	
-#        cd ${{ env.V2BIN }}
-#        zip -r -o V2Ray.zip . -i *.zip
-#        curl -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Software/ALL/V2Ray" -F "file=@V2Ray.zip" ${{ secrets.MAIN_UPLOAD_PROCESSOR }}
-#        curl --socks5 ${{ secrets.PROXY_ADDR }} -U ${{ secrets.PROXY_USER }} -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Software/ALL/V2Ray" -F "file=@V2Ray.zip" ${{ secrets.CN_STATION_PROCESSOR }}
 
