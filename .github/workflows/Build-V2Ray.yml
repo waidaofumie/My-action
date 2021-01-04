@@ -67,7 +67,7 @@ jobs:
         with:
           repository: v2fly/v2ray-core
           path: v2ray-core
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Show workflow information
         id: get_filename
@@ -76,6 +76,7 @@ jobs:
           echo "GOOS: $GOOS, GOARCH: $GOARCH, GOARM: $GOARM, RELEASE_NAME: $_NAME"
           echo "::set-output name=ASSET_NAME::$_NAME"
           echo "ASSET_NAME=$_NAME" >> $GITHUB_ENV
+
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
