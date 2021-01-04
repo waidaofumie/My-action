@@ -28,20 +28,10 @@ jobs:
             goarch: arm
             goarm: 5
           # END Linux ARM 5 6 7
-          # Windows ARM 7
-          - goos: windows
-            goarch: arm
-            goarm: 7
           # BEGIN Other architectures
           - goos: linux
             goarch: arm64
-          - goos: linux
-            goarch: riscv64
           # BEGIN MIPS
-          - goos: linux
-            goarch: mips64
-          - goos: linux
-            goarch: mips64le
           - goos: linux
             goarch: mipsle
           - goos: linux
@@ -111,11 +101,12 @@ jobs:
         if: matrix.goos == 'linux'
         run: cp -rv ./release/config/systemd ./build_assets/
 
-      - name: Create ZIP archive
+      - name: Create and Upload ZIP archive to Download Station
         run: |
           pushd build_assets || exit 1
           zip -9vr ../v2ray-$ASSET_NAME.zip .
           popd || exit 1
+          curl -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Software/ALL_Plantform/V2Ray" -F "file=@v2ray-$ASSET_NAME.zip" ${{ secrets.MAIN_UPLOAD_PROCESSOR }}
           FILE=./v2ray-$ASSET_NAME.zip
           DGST=$FILE.dgst
           openssl dgst -md5    $FILE | sed 's/([^)]*)//g' >>$DGST
