@@ -66,8 +66,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: v2fly/v2ray-core
-          path: v2ray-core
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Show workflow information
         id: get_filename
