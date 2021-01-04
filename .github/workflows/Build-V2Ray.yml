@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         # Include amd64 on all platforms.
-        goos: [windows, freebsd, openbsd, linux, dragonfly, darwin]
+        goos: [windows, linux]
         goarch: [amd64, 386]
         exclude:
           # Exclude i386 on darwin and dragonfly.
@@ -48,8 +48,8 @@ jobs:
             goarch: mips
           # END MIPS
           # BEGIN Android
-          - goos: android
-            goarch: arm64
+          # - goos: android
+          #   goarch: arm64
           # END Android
           # END Other architectures
       fail-fast: false
@@ -93,9 +93,9 @@ jobs:
           sudo chmod +x /usr/bin/upx
           mkdir -p build_assets
           go build -v -o build_assets/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
-          status1=$(upx -q -9 build_assets/v2ray)
+          upx -q -9 build_assets/v2ray
           go build -v -o build_assets/v2ctl -trimpath -ldflags "-s -w -buildid=" -tags confonly ./infra/control/main
-          status2=$(upx -q -9 build_assets/v2ctl)
+          upx -q -9 build_assets/v2ctl
       - name: Build Windows wv2ray
         if: matrix.goos == 'windows'
         run: |
