@@ -89,7 +89,7 @@ jobs:
           sudo -E apt-get -qq remove upx
           wget https://github.com/upx/upx/releases/download/v3.96/upx-3.96-amd64_linux.tar.xz
           tar -xvf upx-3.96-amd64_linux.tar.xz
-          cp upx-3.96-amd64_linux/upx /usr/bin/upx
+          sudo cp upx-3.96-amd64_linux/upx /usr/bin/upx
           sudo chmod +x /usr/bin/upx
           mkdir -p build_assets
           go build -v -o build_assets/v2ray -trimpath -ldflags "-s -w -buildid=" ./main
