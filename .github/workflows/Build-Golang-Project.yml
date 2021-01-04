@@ -1,6 +1,6 @@
 name: Build-Golang-Project
 on:
-  [push, pull_request]:
+  push:
     branches:
       - master
     paths:
