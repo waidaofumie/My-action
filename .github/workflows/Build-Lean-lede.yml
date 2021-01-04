@@ -200,13 +200,6 @@ jobs:
         curl -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Router/LEDE/RaspberryPi-32bit/Lean-Package" -F "file=@rpi-32bit-Package.zip" ${{ secrets.MAIN_UPLOAD_PROCESSOR }}
         #curl --socks5 ${{ secrets.PROXY_ADDR }} -U ${{ secrets.PROXY_USER }} -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Router/LEDE/RaspberryPi-32bit/Lean-Package" -F "file=@rpi-32bit-Package.zip" ${{ secrets.CN_STATION_PROCESSOR }}
         
-    - name: Setup Upload dictionary
-      if: always()
-      run: |
-        cd lede/bin
-        rm -rf packages
-        echo "::set-env name=FIRMWARE::$(pwd)"
-        
     - name: Only Upload firmware (Without packages)
       uses: actions/upload-artifact@v2
       if: always()
@@ -264,14 +257,6 @@ jobs:
         zip -r -o -q -9 rpi4-Package.zip . -i *.ipk
         curl -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Router/LEDE/RaspberryPi4/Lean-Package" -F "file=@rpi4-Package.zip" ${{ secrets.MAIN_UPLOAD_PROCESSOR }}
         #curl --socks5 ${{ secrets.PROXY_ADDR }} -U ${{ secrets.PROXY_USER }} -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Router/LEDE/RaspberryPi4/Lean-Package" -F "file=@rpi4-Package.zip" ${{ secrets.CN_STATION_PROCESSOR }}
-
-        
-    - name: Setup Upload dictionary
-      if: always()
-      run: |
-        cd lede/bin
-        rm -rf packages
-        echo "::set-env name=FIRMWARE::$(pwd)"
         
     - name: Only Upload firmware (Without packages)
       uses: actions/upload-artifact@v2
@@ -329,13 +314,6 @@ jobs:
         zip -r -o -q -9  mt7621-Package.zip . -i *.ipk
         curl -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Router/LEDE/XiaoMi/XiaoMi-AC2100/Lean-Package" -F "file=@mt7621-Package.zip" ${{ secrets.MAIN_UPLOAD_PROCESSOR }}
         #curl --socks5 ${{ secrets.PROXY_ADDR }} -U ${{ secrets.PROXY_USER }} -F "token=${{ secrets.UPLOAD_TOKEN }}" -F "location=Router/LEDE/XiaoMi/XiaoMi-AC2100/Lean-Package" -F "file=@mt7621-Package.zip" ${{ secrets.CN_STATION_PROCESSOR }}
-
-    - name: Setup Upload dictionary
-      if: always()
-      run: |
-        cd lede/bin
-        rm -rf packages
-        echo "::set-env name=FIRMWARE::$(pwd)"
         
     - name: Only Upload firmware (Without packages)
       uses: actions/upload-artifact@v2
