@@ -1,4 +1,4 @@
-name: Build-Lean-lede
+name: Build-V2ray
 on:
   workflow_dispatch:
   schedule:
